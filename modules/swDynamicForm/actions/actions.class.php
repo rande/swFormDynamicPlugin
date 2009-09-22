@@ -22,7 +22,7 @@
  * <http://www.soleoweb.com>.
  */
 
-include_once sfConfig::get('sf_plugins_dir').'/swDynamicFormPlugin/modules/swDynamicForm/lib/baseswDynamicFormActions.class.php';
+include_once sfConfig::get('sf_plugins_dir').'/swFormDynamicPlugin/modules/swDynamicForm/lib/baseswDynamicFormActions.class.php';
 
 /**
  *
@@ -30,7 +30,7 @@ include_once sfConfig::get('sf_plugins_dir').'/swDynamicFormPlugin/modules/swDyn
  * @author     Thomas Rabaix <thomas.rabaix@soleoweb.com>
  * @version    SVN: $Id$
  */
-class swDynamicFormActions extends baseswDynamicForm
+class swDynamicFormActions extends baseswDynamicFormActions
 {
   
 }

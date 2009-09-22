@@ -22,7 +22,7 @@
  
 var swFormDynamic = {
   updateInProgress: false,
-  swFormDynamic: function(url, widget, class_name) {
+  updateFormElements: function(url, widget, class_name) {
     if(swFormDynamic.updateInProgress)
     {
       alert('Update in progress, please wait !');
