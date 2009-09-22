@@ -1,0 +1,73 @@
+# Dynamic Form Plugin
+
+More information here : [Let's be more dynamic with sfForm](http://rabaix.net/en/articles/2009/02/23/let-s-be-more-dynamic-with-sf-form)
+
+## Installation
+
+
+* Load the dynamic route (the one in charge of retrieving data)
+
+        [yml]
+        all:
+          swToolbox:
+            routes_register_dynamic: true
+
+* Enabled the swDynamicForm module in the settings.yml file
+
+* Clear the cache
+
+        ./symfony cc
+
+## Usage
+
+
+A small example of how to refresh values when another one has been changed.
+
+    [php]
+    class MediaFileForm extends BaseMediaFileForm
+    {
+      public function configure()
+      {
+        $this->widgetSchema['entity_id'] = new sfWidgetFormInputHidden;
+        $this->widgetSchema['object_id'] = new sfWidgetFormInputHidden;
+
+        $this->widgetSchema['entity_name'] = new sfWidgetFormInput;
+        $this->widgetSchema['entity_label'] = new sfWidgetFormInput;
+
+        $this->validatorSchema['entity_name'] = new sfValidatorPass;
+        $this->validatorSchema['entity_label'] = new sfValidatorPass;
+
+        $this->widgetSchema['entity_selector'] = new mgEntitySelectorWidget;
+        $this->validatorSchema['entity_selector'] = new sfValidatorPass;
+
+        swToolboxFormDynamicHelper::updateFormElement($this, array(
+          'field' => 'entity_selector'
+        ));
+      }
+
+      public function getDynamicValues($widgetSchema, $field)
+      {
+        $values = array();
+
+        switch($field)
+        {
+          case 'entity_selector':
+            list($entity_id, $object_id) = explode(',', $this->getDefault('entity_selector'));
+
+            $object = Doctrine::getTable('Entity')->getObject($entity_id, $object_id);
+
+            $values = array(
+              'entity_id' => $entity_id,
+              'object_id' => $object_id,
+              'entity_name' => get_class($object),
+              'entity_label' => $object->__toString(),
+            );
+            break;
+
+          default:
+
+        }
+
+        return $values;
+      }
+    }
