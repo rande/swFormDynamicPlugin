@@ -29,7 +29,7 @@
  * @author     Thomas Rabaix <thomas.rabaix@soleoweb.com>
  * @version    SVN: $Id$
  */
-class swToolboxFormDynamicHelper
+class swFormDynamicHelper
 {
   /**
    * Helper method to be call inside a form. This is part of the "Dynamic Form Values" form feature
@@ -78,14 +78,14 @@ class swToolboxFormDynamicHelper
    **/
   static function getBindParameter($format)
   {
-    
-    if(ereg('([^\[]*)\[%s\]', $format, $results))
+
+    if ('%s' == $nameFormat = $format)
     {
-    
-      return $results[1];
+      
+      return false;
     }
-    
-    return null;
+
+    return str_replace('[%s]', '', $nameFormat);
   }
   
   /**

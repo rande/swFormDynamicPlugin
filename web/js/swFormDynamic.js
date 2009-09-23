@@ -25,9 +25,7 @@ var swFormDynamic = {
   updateFormElements: function(url, widget, class_name) {
     if(swFormDynamic.updateInProgress)
     {
-      alert('Update in progress, please wait !');
-      
-      return;
+//      alert('Update in progress, please wait !'); return;
     }
     
     swFormDynamic.updateInProgress = true;
@@ -37,7 +35,7 @@ var swFormDynamic = {
     var data = '_sw_class=' + class_name + '&_sw_name=' + widget.name + '&' + jQuery(form).serialize();
     
     jQuery.ajax({
-      type: 'GET',
+      type: 'POST',
       url: url,
       dataType: "json",
       data: data,
@@ -65,6 +63,8 @@ var swFormDynamic = {
       {
         elm.val(data[param].value);
       }
+
+      jQuery(elm).trigger('sw-dynamic-updated', data);
     }
     
     swFormDynamic.updateInProgress = false;
